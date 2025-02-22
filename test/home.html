@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Connect - Home</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #f8d7da, #fff); /* Light Red Gradient */
+      color: #333;
+      text-align: center;
+      line-height: 1.6;
+      animation: fadeIn 2s ease-out;
+      padding-top: 70px; /* Added space for fixed header */
+    }
+
+    /* Header Styling */
+    header {
+      background-color: #b30000;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    header h1 {
+      font-size: 1.5em;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-grow: 1;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #ffcc00;
+    }
+
+    /* Login and Signup buttons */
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .auth-button {
+      background-color: #ff6666;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1em;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .auth-button:hover {
+      background-color: #ff3333;
+      transform: scale(1.05);
+    }
+
+    /* Home Container */
+    .home-container {
+      padding: 20px;
+      text-align: center;
+      margin-top: 80px; /* Adjusted to account for fixed header */
+    }
+
+    /* Logo Styling */
+    .logo-container {
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 10px;
+      animation: slideIn 2s ease-out;
+    }
+
+    /* Stats Container Styling */
+    .stats-container {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 2s ease-out;
+    }
+
+    .stats-container p {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+
+    .stats-container span {
+      font-weight: bold;
+      color: #b30000;
+    }
+
+    /* Animation Styles */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      0% { transform: translateY(-50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Footer Styling */
+    footer {
+      background-color: #b30000;
+      color: white;
+      padding: 15px 0;
+      margin-top: 30px;
+    }
+
+    footer p {
+      font-size: 1em;
+      margin: 5px 0;
+    }
+
+    footer .developer-info {
+      font-size: 0.9em;
+      font-style: italic;
+    }
+
+    /* Organization Info Styling */
+    .organization-info {
+      background-color: #ffffff;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .organization-info h2 {
+      color: #b30000;
+      font-size: 2em;
+      margin-bottom: 15px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .logo {
+        width: 80%;
+      }
+
+      .stats-container {
+        padding: 15px;
+      }
+
+      .main-link {
+        padding: 10px 20px;
+        font-size: 1em;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header h1 {
+        font-size: 1.2em;
+      }
+
+      .auth-buttons {
+        margin-top: 10px;
+        flex-direction: column;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Blood Connect</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="donor.html">Donor</a>
+      <a href="receiver.html">Receiver</a>
+      <a href="nearby-hospital.html">Nearby Hospitals</a>
+      <a href="emergency.html">Emergency</a>
+      <a href="main.html">About blood</a>
+    </nav>
+    <div class="auth-buttons">
+      <a href="login.html" class="auth-button">Login</a>
+      <a href="signup.html" class="auth-button">Sign Up</a>
+    </div>
+  </header>
+
+  <h2>A bottle of blood saved my life... was it yours?</h2>
+  <div class="home-container">
+    <div class="logo-container">
+      <img src="backgroundimg.png" alt="Blood Connect Logo" class="logo">
+    </div>
+    <div class="stats-container">
+      <p><strong>People Donated Blood: </strong><span id="donated-count">5000</span></p>
+      <p><strong>People Received Blood: </strong><span id="received-count">4500</span></p>
+    </div>
+  </div>
+
+  <!-- Organization Information Section -->
+  <section class="organization-info">
+    <h2>About Blood Connect</h2>
+    <p>Blood Connect is a non-profit organization dedicated to making blood donation and blood requests easier for those in need. We aim to connect blood donors with recipients, helping save lives in emergencies, surgeries, and ongoing treatments.</p>
+    <p>Our platform allows people to find nearby hospitals, donate blood, and request blood in case of emergencies. By creating a strong network of donors and recipients, we strive to make blood donation accessible and ensure a steady supply of blood for hospitals and patients across the region.</p>
+    <p>Join us today in making a difference by donating blood and helping others in need. Every drop counts, and together, we can save countless lives.</p>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2025 Blood Connect. All rights reserved.</p>
+    <p class="developer-info">Developed by [Your Name] | Contact: developer@example.com</p>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

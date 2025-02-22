@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Connect - Sign Up</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding: 20px;
+      margin-top: 120px; /* Add space to ensure header doesn't overlap */
+    }
+
+    /* Header Styling */
+    header {
+      background-color: #b30000;
+      color: white;
+      padding: 20px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2em;
+      margin: 0;
+    }
+
+    /* Navigation Links */
+    .header-nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 10px;
+    }
+
+    .header-nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .header-nav a:hover {
+      background-color: #ff6666;
+      transform: scale(1.1);
+    }
+
+    /* Sign Up Form Container */
+    .form-container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-container button {
+      background-color: #b30000;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .form-container button:hover {
+      background-color: #ff6666;
+    }
+
+    .success-message {
+      color: green;
+      font-size: 1rem;
+      margin-top: 15px;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 1rem;
+      margin-top: 15px;
+    }
+
+    /* Footer Styling */
+    footer {
+      background-color: #b30000;
+      color: white;
+      padding: 15px 0;
+      margin-top: 20px;
+    }
+
+    footer p {
+      font-size: 1em;
+      margin: 0;
+    }
+
+    footer .developer-info {
+      font-size: 0.9em;
+      font-style: italic;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .header-nav a {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Blood Connect</h1>
+    <div class="header-nav">
+      <a href="home.html">Home</a>
+      <a href="donor.html">Donor</a>
+      <a href="receiver.html">Receiver</a>
+      <a href="nearby-hospital.html">Nearby Hospital</a>
+      <a href="emergency.html">Emergency</a>
+      <a href="main.html">About blood</a>
+    </div>
+  </header>
+
+  <!-- Sign Up Form -->
+  <div class="form-container">
+    <form action="signup.php" method="POST">
+      <input type="text" name="name" id="signup-name" placeholder="Enter Name" required><br>
+      <input type="email" name="email" id="signup-email" placeholder="Enter Email" required><br>
+      <input type="tel" name="phone" id="signup-phone" placeholder="Enter Phone Number" required><br>
+      <input type="text" name="location" id="signup-location" placeholder="Enter Location" required><br>
+      <input type="password" name="password" id="signup-password" placeholder="Create Password" required><br>
+      <input type="password" name="confirm_password" id="signup-confirm-password" placeholder="Confirm Password" required><br>
+      <button type="submit">Sign Up</button>
+  </form>
+  
+</div>
+
+    <div class="success-message" id="success-message"></div>
+    <div class="error-message" id="error-message"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Blood Connect. All rights reserved.</p>
+    <p class="developer-info">Developed by arman | Contact: developer@example.com</p>
+  </footer>
+
+  <script>
+    function signupUser() {
+      let name = document.getElementById('signup-name').value;
+      let email = document.getElementById('signup-email').value;
+      let phone = document.getElementById('signup-phone').value;
+      let location = document.getElementById('signup-location').value;
+      let password = document.getElementById('signup-password').value;
+      let confirmPassword = document.getElementById('signup-confirm-password').value;
+      let successMessage = document.getElementById('success-message');
+      let errorMessage = document.getElementById('error-message');
+
+      // Clear previous messages
+      successMessage.textContent = '';
+      errorMessage.textContent = '';
+
+      if (name && email && phone && location && password && confirmPassword) {
+        if (password === confirmPassword) {
+          // Store user data in local storage
+          localStorage.setItem('user-name', name);
+          localStorage.setItem('user-email', email);
+          localStorage.setItem('user-phone', phone);
+          localStorage.setItem('user-location', location);
+          localStorage.setItem('user-password', password);
+
+          successMessage.textContent = "Account Created Successfully! Redirecting to main page...";
+
+          setTimeout(function () {
+            window.location.href = "main.html";  // Redirect to main page
+          }, 2000); // 2 seconds delay before redirect
+        } else {
+          errorMessage.textContent = "Passwords do not match. Please try again.";
+        }
+      } else {
+        errorMessage.textContent = "Please fill in all the fields.";
+      }
+    }
+  </script>
+
+</body>
+</html>

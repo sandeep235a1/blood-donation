@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Connect - Nearby Hospitals</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+      margin-top: 100px;
+    }
+
+    header {
+      background-color: #b30000;
+      color: white;
+      padding: 20px;
+      font-size: 1.8rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      right: 0;
+      z-index: 10;
+      align-items: center;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    header a:hover {
+      background-color: #ff6666;
+      transform: scale(1.1);
+    }
+
+    main {
+      margin-top: 80px; /* To prevent content from being hidden under fixed header */
+      padding: 20px;
+    }
+
+    h1, h3 {
+      margin-bottom: 20px;
+    }
+
+    .hospital-list {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .hospital-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .hospital-list li {
+      font-size: 1.2rem;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .hospital-list li:hover {
+      background-color: #ff6666;
+      color: white;
+    }
+
+    footer {
+      background-color:  #b30000;
+      color: white;
+      padding: 20px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    footer a {
+      color: #ff6666;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .location-message {
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Blood Connect</h1>
+    <a href="home.html">Home</a>
+    <a href="donor.html">Donor</a>
+    <a href="receiver.html">Receiver</a>
+    <a href="nearby-hospital.html">Nearby Hospitals</a>
+    <a href="emergency.html">Emergency</a>
+    <a href="main.html">about blood</a>
+  </header>
+
+  <main>
+    <section class="hospital-list">
+      <h1>Nearby Blood Donation Hospitals</h1>
+      <h3>Hospitals Near You:</h3>
+      <ul id="hospital-list">
+        <!-- Hospitals will be listed here dynamically -->
+      </ul>
+      <div id="location-message" class="location-message"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Blood Connect | Developer: John Doe</p>
+    <p class="location-message">Please enable location to find nearby hospitals!</p>
+    <p><a href="#" onclick="getLocation()">Enable Location</a></p>
+  </footer>
+
+  <script>
+    // Sample list of hospitals with coordinates
+    const hospitals = [
+      { name: "Hospital 1", address: "Address 1", lat: 40.7128, lon: -74.0060 },
+      { name: "Hospital 2", address: "Address 2", lat: 40.7306, lon: -73.9352 },
+      { name: "Hospital 3", address: "Address 3", lat: 40.7580, lon: -73.9855 }
+    ];
+
+    let userLat, userLon;
+
+    // Function to get the user's location
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        document.getElementById("location-message").innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    // Function to display the user's location
+    function showPosition(position) {
+      userLat = position.coords.latitude;
+      userLon = position.coords.longitude;
+      document.getElementById("location-message").innerHTML = "Location found. Showing nearby hospitals...";
+
+      // Filter hospitals by proximity (for simplicity, we use a distance threshold)
+      displayNearbyHospitals(userLat, userLon);
+    }
+
+    // Function to handle location errors
+    function showError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          document.getElementById("location-message").innerHTML = "User denied the request for Geolocation.";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          document.getElementById("location-message").innerHTML = "Location information is unavailable.";
+          break;
+        case error.TIMEOUT:
+          document.getElementById("location-message").innerHTML = "The request to get user location timed out.";
+          break;
+        case error.UNKNOWN_ERROR:
+          document.getElementById("location-message").innerHTML = "An unknown error occurred.";
+          break;
+      }
+    }
+
+    // Function to calculate distance between two points (in kilometers)
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Radius of the Earth in km
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c; // Distance in km
+    }
+
+    // Function to display nearby hospitals
+    function displayNearbyHospitals(lat, lon) {
+      const hospitalList = document.getElementById("hospital-list");
+      hospitalList.innerHTML = ""; // Clear previous list
+
+      // Loop through hospitals and display those within 5 km
+      hospitals.forEach(hospital => {
+        const distance = getDistance(lat, lon, hospital.lat, hospital.lon);
+        if (distance <= 5) {  // Only show hospitals within 5 km
+          const listItem = document.createElement("li");
+          listItem.textContent = `${hospital.name} - ${hospital.address}`;
+          hospitalList.appendChild(listItem);
+        }
+      });
+
+      // If no hospitals within 5 km, display a message
+      if (hospitalList.innerHTML === "") {
+        hospitalList.innerHTML = "<li>No hospitals found within 5 km.</li>";
+      }
+    }
+  </script>
+</body>
+</html>
